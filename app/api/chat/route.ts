@@ -1,3 +1,4 @@
+import { Message } from 'ai';
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
@@ -17,11 +18,14 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { messages, model } = await req.json();
+    const { messages, model }: { messages: Message[], model: string } = await req.json();
 
     const response = await openai.chat.completions.create({
       model: model,
-      messages: messages,
+      messages: messages.map(msg => ({
+        role: msg.role as 'system' | 'user' | 'assistant',
+        content: msg.content
+      })),
       stream: true,
     });
 
