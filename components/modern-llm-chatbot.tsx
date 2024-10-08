@@ -50,7 +50,7 @@ export function ModernLlmChatbot() {
     e.preventDefault()
     if (!input.trim()) return
 
-    const userMessage: Message = {
+  const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
       content: input.trim(),

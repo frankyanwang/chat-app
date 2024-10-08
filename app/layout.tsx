@@ -1,23 +1,12 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import { Roboto } from 'next/font/google';
 import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 const roboto = Roboto({
   weight: ['400', '700'],
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-roboto',
 });
 
 export const metadata: Metadata = {
@@ -31,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={roboto.className}>
+    <html lang="en" className={`${roboto.variable} font-sans`}>
       <body>{children}</body>
     </html>
   );
