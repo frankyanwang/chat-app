@@ -3,11 +3,16 @@
 import { useState, useRef, useEffect } from 'react'
 import { Send, Loader2, Bot, User } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
+import { ComponentPropsWithoutRef } from 'react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 type Message = {
   id: string
@@ -170,7 +175,59 @@ export function ModernLlmChatbot() {
                           : 'bg-secondary text-secondary-foreground'
                       }`}
                     >
-                      {message.content}
+                      <ReactMarkdown 
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          h1: ({node, ...props}) => <h1 className="text-2xl font-bold mt-4 mb-2" {...props} />,
+                          h2: ({node, ...props}) => <h2 className="text-xl font-bold mt-3 mb-2" {...props} />,
+                          h3: ({node, ...props}) => <h3 className="text-lg font-bold mt-2 mb-1" {...props} />,
+                          h4: ({node, ...props}) => <h4 className="text-base font-bold mt-2 mb-1" {...props} />,
+                          h5: ({node, ...props}) => <h5 className="text-sm font-bold mt-2 mb-1" {...props} />,
+                          h6: ({node, ...props}) => <h6 className="text-xs font-bold mt-2 mb-1" {...props} />,
+                          p: ({node, ...props}) => <p className="mb-2" {...props} />,
+                          ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2" {...props} />,
+                          ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2" {...props} />,
+                          li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                          strong: ({node, ...props}) => <strong className="font-bold" {...props} />,
+                          em: ({node, ...props}) => <em className="italic" {...props} />,
+                          blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-gray-300 pl-4 py-2 mb-2" {...props} />,
+                          code({ className, children, ...props }: ComponentPropsWithoutRef<'code'> & { inline?: boolean }) {
+                            const match = /language-(\w+)/.exec(className || '')
+                            return !props.inline && match ? (
+                              <SyntaxHighlighter
+                                style={oneDark}
+                                language={match[1]}
+                                PreTag="div"
+                                className="mb-2"
+                              >
+                                {String(children).replace(/\n$/, '')}
+                              </SyntaxHighlighter>
+                            ) : (
+                              <code className="bg-gray-200 rounded px-1 py-0.5" {...props}>
+                                {children}
+                              </code>
+                            )
+                          },
+                          table: ({node, ...props}) => <table className="border-collapse table-auto w-full mb-2" {...props} />,
+                          thead: ({node, ...props}) => <thead className="bg-gray-200" {...props} />,
+                          tbody: ({node, ...props}) => <tbody {...props} />,
+                          tr: ({node, ...props}) => <tr className="border-b" {...props} />,
+                          th: ({node, ...props}) => <th className="border p-2 font-bold" {...props} />,
+                          td: ({node, ...props}) => <td className="border p-2" {...props} />,
+                          a: ({node, ...props}) => <a className="text-blue-500 hover:underline" {...props} />,
+                          img: ({node, ...props}) => <img className="max-w-full h-auto" {...props} />,
+                          hr: ({node, ...props}) => <hr className="border-t border-gray-300 my-4" {...props} />,
+                          del: ({node, ...props}) => <del className="line-through" {...props} />,
+                          input: ({node, ...props}) => {
+                            if (props.type === 'checkbox') {
+                              return <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-600" {...props} />
+                            }
+                            return <input {...props} />
+                          },
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
                     </div>
                   </div>
                 </motion.div>
