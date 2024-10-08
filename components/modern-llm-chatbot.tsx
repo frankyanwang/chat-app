@@ -164,13 +164,13 @@ export function ModernLlmChatbot() {
                       message.role === 'user' ? 'flex-row-reverse space-x-reverse' : 'flex-row'
                     }`}
                   >
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                    <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${
                       message.role === 'user' ? 'bg-primary' : 'bg-secondary'
                     }`}>
                       {message.role === 'user' ? <User className="w-5 h-5 text-primary-foreground" /> : <Bot className="w-5 h-5 text-secondary-foreground" />}
                     </div>
                     <div
-                      className={`rounded-lg px-4 py-2 shadow-md ${
+                      className={`rounded-lg px-4 py-2 shadow-md overflow-hidden ${
                         message.role === 'user'
                           ? 'bg-primary text-primary-foreground'
                           : 'bg-secondary text-secondary-foreground'
@@ -199,7 +199,7 @@ export function ModernLlmChatbot() {
                                 style={oneDark}
                                 language={match[1]}
                                 PreTag="div"
-                                className="mb-2"
+                                className="mb-2 max-w-full overflow-x-auto"
                               >
                                 {String(children).replace(/\n$/, '')}
                               </SyntaxHighlighter>
@@ -216,12 +216,13 @@ export function ModernLlmChatbot() {
                           th: ({...props}) => <th className="border p-2 font-bold" {...props} />,
                           td: ({...props}) => <td className="border p-2" {...props} />,
                           a: ({...props}) => <a className="text-blue-500 hover:underline" {...props} />,
-                          img: ({src, alt, width, height, ...props}) => (
+                          img: ({src, alt, ...props}) => (
                             <Image 
                               src={src || "/path/to/default-image.jpg"}
                               alt={alt || "Image"}
-                              width={width ? Number(width) : undefined}
-                              height={height ? Number(height) : undefined}
+                              width={500}
+                              height={300}
+                              className="max-w-full h-auto"
                               {...props}
                             />
                           ),
