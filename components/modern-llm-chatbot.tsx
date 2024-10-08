@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast"
 import { ComponentPropsWithoutRef } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import Image from 'next/image';
 
 type Message = {
   id: string
@@ -215,7 +216,13 @@ export function ModernLlmChatbot() {
                           th: ({...props}) => <th className="border p-2 font-bold" {...props} />,
                           td: ({...props}) => <td className="border p-2" {...props} />,
                           a: ({...props}) => <a className="text-blue-500 hover:underline" {...props} />,
-                          img: ({...props}) => <img className="max-w-full h-auto" {...props} />,
+                          img: ({...props}) => <Image 
+                            src={props.src || "/path/to/default-image.jpg"}
+                            alt={props.alt || "Image"}
+                            width={props.width ? parseInt(props.width.toString()) : undefined}
+                            height={props.height ? parseInt(props.height.toString()) : undefined}
+                            {...props}
+                          />,
                           hr: ({...props}) => <hr className="border-t border-gray-300 my-4" {...props} />,
                           del: ({...props}) => <del className="line-through" {...props} />,
                           input: ({...props}) => {

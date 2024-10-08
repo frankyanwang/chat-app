@@ -49,8 +49,9 @@ export async function POST(req: Request) {
         'Connection': 'keep-alive',
       },
     });
-  } catch(error: any) {
-    console.error(`Error with OpenAI API request: ${error.message}`);
+  } catch(error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error(`Error with OpenAI API request: ${errorMessage}`);
     return NextResponse.json({
       error: {
         message: 'An error occurred during your request.',
