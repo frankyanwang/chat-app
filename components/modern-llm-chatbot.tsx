@@ -30,7 +30,7 @@ type LLMEndpoint = {
 }
 
 const llmEndpoints: LLMEndpoint[] = [
-  { id: 'gpt-3.5-turbo', name: 'GPT-3.5-turbo' },
+  { id: 'gpt-4o-mini', name: 'GPT-4o Mini' },
   { id: 'gpt-4o', name: 'GPT-4o' },
 ]
 
