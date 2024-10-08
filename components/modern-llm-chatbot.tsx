@@ -216,13 +216,15 @@ export function ModernLlmChatbot() {
                           th: ({...props}) => <th className="border p-2 font-bold" {...props} />,
                           td: ({...props}) => <td className="border p-2" {...props} />,
                           a: ({...props}) => <a className="text-blue-500 hover:underline" {...props} />,
-                          img: ({...props}) => <Image 
-                            src={props.src || "/path/to/default-image.jpg"}
-                            alt={props.alt || "Image"}
-                            width={props.width ? parseInt(props.width.toString()) : undefined}
-                            height={props.height ? parseInt(props.height.toString()) : undefined}
-                            {...props}
-                          />,
+                          img: ({src, alt, width, height, ...props}) => (
+                            <Image 
+                              src={src || "/path/to/default-image.jpg"}
+                              alt={alt || "Image"}
+                              width={width ? Number(width) : undefined}
+                              height={height ? Number(height) : undefined}
+                              {...props}
+                            />
+                          ),
                           hr: ({...props}) => <hr className="border-t border-gray-300 my-4" {...props} />,
                           del: ({...props}) => <del className="line-through" {...props} />,
                           input: ({...props}) => {
