@@ -16,7 +16,7 @@ import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import Image from 'next/image';
 
 // Add this constant at the top of your file, outside the component
-const APP_VERSION = "0.0.1"; // Update this version number as needed
+const APP_VERSION = "0.0.2"; // Update this version number as needed
 
 type Message = {
   id: string
