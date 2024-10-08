@@ -219,16 +219,22 @@ export function ModernLlmChatbot() {
                           th: ({...props}) => <th className="border p-2 font-bold" {...props} />,
                           td: ({...props}) => <td className="border p-2" {...props} />,
                           a: ({...props}) => <a className="text-blue-500 hover:underline" {...props} />,
-                          img: ({src, alt, ...props}) => (
-                            <Image 
-                              src={src || "/path/to/default-image.jpg"}
-                              alt={alt || "Image"}
-                              width={500}
-                              height={300}
-                              className="max-w-full h-auto"
-                              {...props}
-                            />
-                          ),
+                          img: ({src, alt, width, height, ...props}) => {
+                            // Convert width and height to numbers if possible, or use defaults
+                            const numWidth = typeof width === 'string' ? parseInt(width, 10) : width || 500;
+                            const numHeight = typeof height === 'string' ? parseInt(height, 10) : height || 300;
+                            
+                            return (
+                              <Image 
+                                src={src || "/path/to/default-image.jpg"}
+                                alt={alt || "Image"}
+                                width={numWidth}
+                                height={numHeight}
+                                className="max-w-full h-auto"
+                                {...props}
+                              />
+                            );
+                          },
                           hr: ({...props}) => <hr className="border-t border-gray-300 my-4" {...props} />,
                           del: ({...props}) => <del className="line-through" {...props} />,
                           input: ({...props}) => {
