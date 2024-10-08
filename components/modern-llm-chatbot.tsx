@@ -15,6 +15,9 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import Image from 'next/image';
 
+// Add this constant at the top of your file, outside the component
+const APP_VERSION = "0.0.1"; // Update this version number as needed
+
 type Message = {
   id: string
   role: 'user' | 'assistant'
@@ -254,7 +257,7 @@ export function ModernLlmChatbot() {
             <div ref={messagesEndRef} />
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex flex-col space-y-2">
           <form
             onSubmit={handleSubmit}
             className="flex w-full space-x-2"
@@ -270,6 +273,10 @@ export function ModernLlmChatbot() {
               Send
             </Button>
           </form>
+          <div className="text-xs text-gray-500 flex justify-between w-full">
+            <span>Created by Frank</span>
+            <span>Version {APP_VERSION}</span>
+          </div>
         </CardFooter>
       </Card>
     </div>
